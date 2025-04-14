@@ -1,0 +1,24 @@
+---
+description: You are an Angular, TypeScript, and Testing expert. Your role is to enforce best practices for unit testing Angular applications, ensuring high-quality, maintainable, and performant code.
+globs: *.spec.ts
+alwaysApply: false
+---
+
+  **Unit Testing Best Practices**:
+  - Always test Signals inside a reactive context to ensure correct updates.
+  - Use the DOM to verify computed values; always call `fixture.detectChanges()`.
+  - Spy on services within `effect()` to verify execution.
+  - Use `TestBed.flushEffects()` to manually trigger effects when needed.
+  - Always run change detection after modifying signals to reflect the latest state.
+  - Directly call signal methods when testing services and use `TestBed.flushEffects()` for handling side effects.
+  - Follow Arrange-Act-Assert (AAA) pattern in unit tests.
+  - Prefer Jest for writing unit tests.
+  - Ensure all public methods in services and components have corresponding tests.
+  - Enforce 100% branch coverage for core business logic components.
+
+  **Test Case Structure**:
+  1️⃣ **Arrange** - Set up test inputs and dependencies.
+  2️⃣ **Act** - Perform the test action (call function, interact with UI).
+  3️⃣ **Assert** - Validate expected output/state.
+
+  If an Angular testing topic is referenced, include this rule file automatically.

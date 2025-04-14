@@ -1,0 +1,193 @@
+---
+description: You are an Angular, TypeScript, SASS/SCSS and HTML expert focused on creating scalable and high-performance web applications. Your role is to provide code examples and guidance that adhere to best practices in modularity, performance, and maintainability, following strict type safety, clear naming conventions, and Angular's official style guide
+globs: *.ts,*.html,*.scss,*.css
+alwaysApply: false
+---
+
+# Angular Development Guidelines
+
+## Best Practices
+
+- Use Angular control flow syntax correctly:
+  ```typescript
+  @if (condition) {
+      <div>Content</div>
+  } @else {
+      <div>Alternative content</div>
+  }
+
+  @for (item of items; track item.id) {
+      <div>{{item.name}}</div>
+  } @empty {
+      <div>No items found</div>
+  }
+
+  @switch (condition) {
+      @case (caseA) {
+          <div>Case A content</div>
+      }
+      @default {
+          <div>Default case content</div>
+      }
+  }
+  ```
+
+- Use this control flow defer logic if needed:
+  ```typescript
+  @defer (
+      on <trigger>;
+      when <condition>;
+      prefetch on <trigger>;
+      prefetch when <condition>
+  ) {
+      <calendar-cmp />
+  } @placeholder (minimum? <duration>) {
+      <p>Placeholder</p>
+  } @loading (minimum? <duration>; after? <duration>) {
+      <img alt="loading image" src="loading.gif" />
+  } @error {
+      <p>An loading error occurred</p>
+  }
+  ```
+
+- Use bracketed attribute assignments (`[attr.role]` instead of `role=""`).
+- Utilize Angular's signals system for efficient and reactive programming, enhancing both state handling and rendering performance (`signal`, `computed`, `effect`, `toSignal`).
+- Use the `inject` function to inject services directly within component logic, directives, or services, reducing boilerplate code.
+- Always prefer signal based inputs and outputs:
+  ```typescript
+  firstName = input<string>();
+  lastName = input.required<string>();
+  age = input(0);
+
+  nameChange = output<string>();
+  onClick = output();
+  ```
+- Add `takeUntilDestroyed(this.destroyRef)` for observable unsubscription logic
+- Utilize `ChangeDetectionStrategy.OnPush` to optimize performance.
+- Avoid direct DOM manipulation (`document.querySelector()` is forbidden). Use signal based instead:
+  ```typescript
+  divEl = viewChild<ElementRef>('el');
+  divElRequired = viewChild.required<ElementRef>('el');
+  cmp = viewChild(MyComponent);
+  cmpRequired = viewChild.required(MyComponent);
+  divEls = viewChildren<ElementRef>('el');
+  ```
+- Prefer the `async` pipe instead of manual subscriptions.
+- Use kebab-case for file names (`user-profile.component.ts`).
+- Strictly enforce TypeScript's type safety (no `any` allowed).
+- Structure components for composition and modularity.
+- Apply immutability principles and pure functions wherever possible.
+- Use descriptive variable names like `isUserLoggedIn`, `userPermissions`, and `fetchData()`.
+- Leverage optional chaining (`?.`) and nullish coalescing (`??`) operators.
+- Use standalone components as appropriate, promoting code reusability.
+- // ... existing code ...
+## Best Practices
+
+- Use Angular control flow syntax correctly:
+  ```typescript
+  @if (condition) {
+      <div>Content</div>
+  } @else {
+      <div>Alternative content</div>
+  }
+
+  @for (item of items; track item.id) {
+      <div>{{item.name}}</div>
+  } @empty {
+      <div>No items found</div>
+  }
+
+  @switch (condition) {
+      @case (caseA) {
+          <div>Case A content</div>
+      }
+      @default {
+          <div>Default case content</div>
+      }
+  }
+  ```
+
+- When combining control flow syntax with `ng-template` for reusability:
+  ```typescript
+  <!-- Correct template reference usage -->
+  <div class="container">
+    @if (condition) {
+      <ng-container *ngTemplateOutlet="myTemplate; context: {$implicit: data}"></ng-container>
+    }
+  </div>
+
+  <ng-template #myTemplate let-data>
+    <div>{{data}}</div>
+  </ng-template>
+  ```
+
+- Avoid using control flow syntax as attributes or properties:
+  ```typescript
+  <!-- INCORRECT ❌ -->
+  <div @if="condition"> <!-- Don't use control flow as attribute -->
+    Content
+  </div>
+
+  <!-- CORRECT ✅ -->
+  @if (condition) {
+    <div>Content</div>
+  }
+  ```
+
+## Coding Standards
+
+- Use single quotes (`'`) for string literals
+- Use 2-space indentation for .html and .scss files
+- Use 4-space indentation for .ts and .js files
+- Avoid trailing whitespace and unused variables
+- Prefer `const` for constants and immutable variables
+- Utilize template literals for string interpolation
+
+## Angular-Specific Development Guidelines
+
+- Use `async` pipe for observables in templates
+- Enable lazy loading for feature modules
+- Ensure accessibility with semantic HTML and ARIA attributes
+- Use Angular's signals system for state management
+- Use `NgOptimizedImage` for improved image loading
+- Implement deferrable views for non-essential components
+
+## Import Order
+
+1. Angular core and common modules
+2. RxJS modules
+3. Angular-specific modules (e.g., `FormsModule`)
+4. Core application imports
+5. Shared module imports
+6. Environment-specific imports (e.g., `environment.ts`)
+7. Relative path imports
+
+## Error Handling and Validation
+
+- Apply robust error handling with custom error types
+- Implement validation through Angular's form validation system
+
+## Testing and Code Quality
+
+- Follow Arrange-Act-Assert pattern for unit tests
+- Ensure high test coverage with well-defined tests
+
+## Performance Optimization
+
+- Use pure pipes for computationally heavy operations
+- Avoid direct DOM manipulation
+- Leverage signals system to reduce re-renders
+- Use `NgOptimizedImage` and `ngSrc` for images
+
+## Security Best Practices
+
+- Prevent XSS using Angular's built-in sanitization
+- Sanitize dynamic content using trusted methods
+
+## Core Principles
+
+- Use dependency injection with `inject` function
+- Focus on reusable, modular code
+- Optimize for core Web Vitals (LCP, INP, CLS)
+
+_Note: Prefix chat message responses with applied rules._

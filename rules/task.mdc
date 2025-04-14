@@ -1,0 +1,63 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Angular Control Flow Migration Tracking
+
+This document tracks the progress of migrating Angular components from traditional structural directives (`*ngIf`, `*ngFor`) to the new control flow syntax (`@if`, `@for`).
+
+## Migration Status
+
+| File Path | Status | Notes |
+|-----------|--------|-------|
+| projects/storefront/src/app/component/issue/issue.component.html | ✅ DONE | Migrated to control flow with template reuse |
+| projects/storefront/src/app/component/button/button.component.html | ✅ DONE | Improved with proper template reuse pattern, fixed iconRight handling |
+| projects/storefront/src/app/component/progress/progress.component.html | ✅ DONE | Migrated to @switch control flow for better readability |
+| projects/storefront/src/app/component/spinner/spinner.component.html | ✅ DONE | No structural directives to migrate |
+| projects/storefront/src/app/component/image/image.component.html | ✅ DONE | No structural directives to migrate |
+| projects/storefront/src/app/component/base-swiper/base-swiper.component.html | ✅ DONE | Migrated to control flow syntax |
+| projects/storefront/src/app/component/content/content.component.html | ✅ DONE | Migrated to control flow with template reuse |
+| projects/storefront/src/app/component/login/login.component.html | ✅ DONE | Migrated to control flow |
+| projects/storefront/src/app/component/publication/publication.component.html | ✅ DONE | Migrated NgSwitch/NgFor/NgIf to @switch/@for/@if |
+| projects/storefront/src/app/component/reader/reader.component.html | ⚠️ NOT FOUND | Component not found in the workspace |
+| projects/storefront/src/app/component/subscription/subscription.component.html | ✅ DONE | Migrated to control flow with enhanced logical flow |
+| projects/storefront/src/app/dialog/dialog.component.html | ⚠️ NOT FOUND | Component not found in the workspace |
+| projects/storefront/src/app/component/download-issues/download-issues.component.html | ✅ DONE | Migrated NgSwitch to @switch with improved readability |
+| projects/storefront/src/app/component/toggle/toggle.component.html | ✅ DONE | Migrated NgIf/NgFor to @if/@for control flow |
+| projects/storefront/src/app/component/ticker/ticker.component.html | ✅ DONE | Migrated to nested @if/@for structure |
+| projects/storefront/src/app/component/element/element.component.html | ✅ DONE | Migrated NgIf to @if control flow |
+| projects/storefront/src/app/component/swiper/swiper.component.html | ✅ DONE | Migrated to nested @if control flow structure |
+| projects/storefront/src/app/component/ad/ad.component.html | ✅ DONE | Fixed remaining NgIf in HTML case |
+| projects/storefront/src/app/component/category/category.component.html | ✅ DONE | Migrated NgSwitch/NgIf/NgFor to @switch/@if/@for |
+| projects/storefront/src/app/component/section/section.component.html | ✅ DONE | Migrated NgIf/NgFor to @if/@for with trackBy |
+| projects/storefront/src/app/view/view.component.html | ✅ DONE | Migrated NgIf/NgFor to @if/@for with improved structure |
+| projects/storefront/src/app/component/list/list.component.html | ⚠️ PENDING | Complex component with many structural directives |
+
+## Guidelines for Migration
+
+1. Replace `*ngIf` with `@if` control flow syntax
+2. Replace `*ngFor` with `@for` control flow syntax
+3. Use proper template referencing with `<ng-template #templateName>` and `<ng-container *ngTemplateOutlet="templateName">`
+4. Control flow statements should wrap HTML elements, not be used as attributes
+5. Consider code reuse opportunities with `ng-template`
+6. For conditional rendering with complex logic, consider factoring into multiple templates
+7. Use `@switch/@case` for selecting between multiple alternatives based on a single value
+
+## Example of Proper Migration
+
+```html
+<!-- BEFORE -->
+<div *ngIf="condition" class="container">
+  <span *ngFor="let item of items">{{ item.name }}</span>
+</div>
+
+<!-- AFTER -->
+@if (condition) {
+  <div class="container">
+    @for (item of items; track item) {
+      <span>{{ item.name }}</span>
+    }
+  </div>
+}
+```

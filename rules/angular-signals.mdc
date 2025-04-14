@@ -1,0 +1,105 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description:
+globs: src/**/*.ts, src/**/*.html 
+alwaysApply: false
+---
+# Angular Signals
+
+This rule defines best practices for using Angular signals in components.
+
+## Preferred Pattern
+
+For dynamic component loading with signals:
+
+```typescript
+@let ct = componentType();
+<ng-container [ngComponentOutlet]="ct.type"
+ [ngComponentOutletInputs]="inputs()"
+ #instance="ngComponentOutlet"
+/>
+```
+
+Where signals and computed values are defined as:
+
+```typescript
+// Define primitive signals
+userName = signal('N/A');
+userType = signal<"user" | "admin" | "intruder">('user');
+
+// Create computed values for component configuration
+componentType = computed(() => configs[this.userType()]);
+inputs = computed(() => ({
+    permissions: this.componentType().permissions,
+    name: this.userName(),
+    type: this.userType(),
+}));
+```
+
+## Key Guidelines
+
+1. Use `signal()` for primitive values that change over time
+2. Properly type signals with generics when needed
+3. Use `computed()` for derived values that depend on signals
+4. Use the `@let` directive with computed values in templates if those values are used over the project multiple times
+5. Leverage `ngComponentOutlet` & `ngTemplateOutlet` with computed inputs for dynamic components
+
+## Working with effects
+
+### Best Practices
+- Assign reliant signals early in the effect
+- use required signals if we whant effect to run when all required signals are available
+- create a computed signal to match all needed signals resolved together
+- If signal is not assigned early and later is hidden within an if branch, effect will not run
+- Use multiple effect logic for compeletely different needs
+- There are rootLevel (in root services) and view level (component) effects
+- Use afterRenderEffect for read and write lifecycles (runs after whole app components construction cycle, while effect runs on component sync)
+
+### Working with required inputs
+```typescript
+value = input.required<MyType>();
+key = input.required<string>();
+private updater = effect(() => {
+  // No worry about the order
+  update(this.value()[this.key()])
+})
+```
+
+### ViewChild/ContentChild as signals
+No need to rely on lifecycle hooks like ngAfterViewInit and ngAfterContentInit anymore. Manage within effects.
+
+## Signal mistakes to avoid
+
+- Not using signals for dynamic template state
+- Using signals where they are not needed (if value is not part of template, but internal .ts logic)
+- Converting signals from observables when not needed (better use rxjs for form.valueChanges or router.events)
+- Still using lifecycle events when signals handle template state
+- Not combining signal calls in effect to one computed signal
+- Not using explicitEffect([activeAccount], ([account]) =>{}) where needed
+- Not using toSignal to convert observables to signals to avoid async pipe in templates
+- Using input signals in directives without linkedSignal option for manipulation if needed
+- Not using appropriate primitives beyond signal(), computed() and effect():
+  - input() for inputs
+  - Signal Queries (viewChild(), viewChildren, contentChild(), contentChildren())
+  - model() for two-way binding
+  - linkedSignal (mostly if we have input signal and whant to have a possibility to change this signal, we create a linkedSignal from it)
+  - resource/rxResource (in beta stage, no focus on it currently)
+  - afterRenderEffect()
+
+## Signal output
+
+- Works same as before under the hood
+- Autocompleted after component is destroyed
+- While using subscribe - it is not an observable, so no pipe can be used
+- Can use outputToObservable() method to output directly from observable and they both will be completed after component is destroyed
+
+## Signals testing
+
+- appRef.tick() or fixture.detectChanges() can be used for component level signal and effects
+- TestBed.flushEffects() can be used for root level effects
+- componentRef.setInput for setting inputs
+- Set rethrowApplicationErrors: false to prevent exceptions in effects from bubbling up to change detection in tests

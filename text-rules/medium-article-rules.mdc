@@ -1,0 +1,100 @@
+# ✍️ Medium Article Writing Rules (Inspired by Awais Shaikh’s Angular Hydration Post)
+
+## 🧱 Article Structure Rules
+
+### 1. Start with a Hooking Title
+- Use **wordplay** or metaphors (e.g., _“Keep Hydrated with Angular”_)
+- Include the main tech/topic (e.g., _“Angular Incremental Hydration”_)
+- Bonus: emojis help stand out (✅ Optional)
+
+---
+
+### 2. Use a Clean and Short Intro
+- 2–4 lines max
+- Start with a **relatable problem** or trend
+- Follow with a **clear goal or question**
+
+**Example:**  
+> Angular 17 introduced a hydration strategy that’s a performance breakthrough. But how do you use it right?
+
+---
+
+### 3. Set Expectations with a Table of Contents
+```markdown
+Here’s what we’ll cover:
+- What is hydration?
+- How Angular handles it
+- Incremental hydration flow
+- Common gotchas and solutions
+```
+
+✅ Helps readers scan and stay engaged
+
+---
+
+### 4. Use Clear, Consistent Headings
+Use H2 (`##`) for main sections, H3 (`###`) for subtopics:
+```markdown
+## What is Hydration?
+
+### SSR vs Hydration
+```
+
+---
+
+### 5. Break Down Concepts With a Mix of:
+- ✅ Short paragraphs (2–3 lines)
+- ✅ Bullet points or numbered lists
+- ✅ **Bolded key terms** in-line
+- ✅ *Italics to emphasize nuance*
+
+---
+
+### 6. Use Callouts for Tips or Alerts
+Format tips and warnings like:
+```markdown
+**💡 Tip:** Always use `trackBy` when using `@defer` in a loop.
+```
+```markdown
+**⚠️ Warning:** `hydrate when` won’t work unless the parent is hydrated.
+```
+
+---
+
+### 7. Use Code Blocks Effectively
+Stick to relevant, minimal examples:
+```ts
+@defer (hydrate on interaction) {
+  <my-chart></my-chart>
+}
+```
+
+---
+
+### 8. Embed Visuals Sparingly But Meaningfully
+- Use 1–2 diagrams/screenshots
+- Keep visuals high-contrast and readable
+- Reference them in text
+
+---
+
+### 9. Wrap Up With Final Thoughts + CTA
+Summarize key takeaways in bullets or a short paragraph.
+
+Close with a **reader question** or CTA like:
+> Tried this in production? Let me know how it went in the comments.
+
+---
+
+### 10. Use Tags + SEO-friendly Slug
+- Add relevant Medium tags (e.g., `Angular`, `Web Development`)
+- Make the URL slug clear:  
+  `/angular-incremental-hydration-guide`
+
+---
+
+## ✨ Optional Style Enhancers
+- Use analogies
+- Link to official docs, PRs, explainer videos
+- Include a quote-style line:
+> “Defer blocks hydrate only when triggered. But the *trigger* is everything.”

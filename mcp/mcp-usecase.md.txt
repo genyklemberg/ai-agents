@@ -1,0 +1,9 @@
+Reasoner MCP:
+Complex architectural decisions requiring deep tradeoff analysis
+Refactoring strategies with multiple interdependent steps
+Debugging complex issues with multiple potential causes
+Algorithm design or optimization problems
+Security vulnerability analysis
+Performance bottleneck identification
+Data structure selection with complex requirements
+Technical debt evaluation and prioritization
